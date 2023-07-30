@@ -4,23 +4,13 @@ import {addTask, deleteTask, editTask, changeStatus} from "../../actions/actions
 import styles from "./Home.module.css";
 import Corner_Button from "../Corner_Button/Corner_Button";
 import Task from "../Task/Task";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
+import AddTaskDialog from "../AddTaskDialog/AddTaskDialog";
 
 const Home = () => {
+    const categories = useSelector((state) => state.tasks.categories); 
     const tasks = useSelector((state) => state.tasks.tasks);
     const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
-    const [newTaskData, setNewTaskData] = useState({
-      name: "",
-      description: "",
-      date: "",
-      status: ""
-    });
 
     const handleOpen = () => {
       setOpen(true);
@@ -30,25 +20,6 @@ const Home = () => {
       setOpen(false);
     };
 
-    const handleInputChange = (event) => {
-      const { name, value } = event.target;
-      setNewTaskData((prevData) => ({
-        ...prevData,
-        [name]: value
-      }));
-    };
-  
-    const handleAddTask = () => {
-      dispatch(addTask(newTaskData));
-      setNewTaskData({
-        name: "",
-        description: "",
-        date: "",
-        status: ""
-      });
-      handleClose();
-    };
-  
     const handleDeleteTask = (index) => {
       dispatch(deleteTask(index));
     };
@@ -82,6 +53,7 @@ const Home = () => {
               description={task.description}
               date={task.date}
               status={task.status}
+              categories={task.categories}
               handleDelete={() => handleDeleteTask(index)}
               handleEdit={() => handleEditTask(index)}
               handleComplete={() => handleCompleteTask(index)}
@@ -89,47 +61,7 @@ const Home = () => {
           )) : <p className={styles.message}>No hay tareas</p> }
         </div>
         <Corner_Button text="+" action={handleOpen} />
-        <Dialog open={open} onClose={handleClose}>
-          <DialogTitle>Agregar Nueva Tarea</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              <form>
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Nombre de la tarea"
-                  value={newTaskData.name}
-                  onChange={handleInputChange}
-                />
-                <input
-                  type="text"
-                  name="description"
-                  placeholder="Descripción de la tarea"
-                  value={newTaskData.description}
-                  onChange={handleInputChange}
-                />
-                <input
-                  type="text"
-                  name="date"
-                  placeholder="Fecha de la tarea"
-                  value={newTaskData.date}
-                  onChange={handleInputChange}
-                />
-                <input
-                  type="text"
-                  name="status"
-                  placeholder="Estado de la tarea"
-                  value={newTaskData.status}
-                  onChange={handleInputChange}
-                />
-              </form>
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Cancelar</Button>
-            <Button onClick={handleAddTask}>Agregar</Button>
-          </DialogActions>
-        </Dialog>
+        <AddTaskDialog open={open} handleClose={handleClose} categories={categories} />
       </div>
     );
   };

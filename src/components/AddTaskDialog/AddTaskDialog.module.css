@@ -1,0 +1,39 @@
+/* Estilos para el cuadro de diálogo */
+.dialogTitle {
+    background-color: #edfd03;
+    color: #000;
+}
+
+.dialogContent {
+    padding: 16px;
+    padding-top: 16px !important;
+}
+
+.dialogActions {
+    padding: 16px;
+    justify-content: flex-end;
+}
+
+/* Estilos para los campos de texto */
+.textfield {
+    margin-bottom: 6px;
+}
+
+/* Estilos para los botones */
+.cancelButton {
+    color: #000 !important;
+    border: 1px solid #edfd03 !important;
+}
+
+.addButton {
+    background-color: #edfd03 !important;
+    color: #000 !important;
+}
+
+.cancelButton:hover {
+    box-shadow: 0px 0px 5px #edfd03;
+}
+
+.addButton:hover {
+    box-shadow: 0px 0px 5px #edfd03;
+}

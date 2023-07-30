@@ -2,6 +2,9 @@ export const ADD_TASK = "ADD_TASK";
 export const DELETE_TASK = "DELETE_TASK";
 export const EDIT_TASK = "EDIT_TASK";
 export const CHANGE_STATUS = "CHANGE_STATUS";
+export const ADD_TASK_CATEGORY = "ADD_TASK_CATEGORY";
+export const DELETE_TASK_CATEGORY = "DELETE_TASK_CATEGORY";
+export const CLEAR_SELECTED_CATEGORIES = "CLEAR_SELECTED_CATEGORIES";
 
 export const addTask = (task)=>({
     type: ADD_TASK,
@@ -28,3 +31,18 @@ export const changeStatus = (index, status)=>({
         status
     },
 });
+
+export const addTaskCategory = (category)=>({
+    type: ADD_TASK_CATEGORY,
+    payload: category,
+});
+
+export const deleteTaskCategory = (index)=>({
+    type: DELETE_TASK_CATEGORY,
+    payload: index,
+});
+
+export const clearSelectedCategories = ()=>({
+    type: CLEAR_SELECTED_CATEGORIES,
+});
+
