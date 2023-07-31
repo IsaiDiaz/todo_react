@@ -37,3 +37,50 @@
 .addButton:hover {
     box-shadow: 0px 0px 5px #edfd03;
 }
+
+button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: bold;
+}
+
+.inline_button {
+    width: 15px;
+    height: 15px;
+    background-color: #ccc;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.inline_button:hover {
+    background-color: #edfd03;
+}
+
+.selected_categories {
+    border: 1px solid #edfd03;
+    border-radius: 5px;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 100px;
+    margin: 5px;
+}
+
+.options_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.categories_container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+}

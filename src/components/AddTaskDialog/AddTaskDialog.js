@@ -12,15 +12,17 @@ import TextField from "@mui/material/TextField";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Stack from "@mui/material/Stack";
+import { FormControlLabel } from "@mui/material";
+import Checkbox from "@mui/material/Checkbox";
 
 const AddTaskDialog = ({ open, handleClose, categories }) => {
-    const selectedCategories = useSelector((state) => state.tasks.selectedCategories);
+    const selectedCategories = useSelector((state) => Array.from(state.tasks.selectedCategories));
     const dispatch = useDispatch();
     const [newTaskData, setNewTaskData] = useState({
         name: "",
         description: "",
         date: new Date().toISOString().slice(0, 10),
-        status: "",
+        status: "Pendiente",
         categories: []
     });
 
@@ -40,11 +42,24 @@ const AddTaskDialog = ({ open, handleClose, categories }) => {
             name: "",
             description: "",
             date: new Date().toISOString().slice(0, 10),
-            status: "",
+            status: "Pendiente",
             categories: []
         });
         handleClose();
-    }
+    };
+
+    const handleCategoryChange = (category) => {
+        dispatch(addTaskCategory(category));
+    };
+
+    const handleCheckboxChange = (event) => {
+        const { name, checked } = event.target;
+        setNewTaskData((prevData) => ({
+            ...prevData,
+            [name]: checked,
+            status: checked ? "Completado" : "Pendiente", // Establecer el valor del estado basado en el estado del checkbox
+        }));
+    };
 
     return (
         <Dialog open={open} onClose={handleClose}>
@@ -82,34 +97,49 @@ const AddTaskDialog = ({ open, handleClose, categories }) => {
                             onChange={handleInputChange}
                             className={styles.textfield}
                         />
-                        <TextField
-                            fullWidth
-                            type="text"
-                            name="status"
-                            label="Estado de la tarea"
-                            value={newTaskData.status}
-                            onChange={handleInputChange}
-                            className={styles.textfield}
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    name="completed"
+                                    checked={newTaskData.completed}
+                                    onChange={handleCheckboxChange}
+                                    color="primary"
+                                />
+                            }
+                            label="Completado"
                         />
                         <Select
                             fullWidth
                             label="Categoría de la tarea"
                             name="category"
+                            value={<MenuItem value="" disabled selected>
+                                Seleccione una o más categorías
+                            </MenuItem>}
                             className={styles.textfield}
                         >
+                            <MenuItem value="" disabled selected>
+                                Seleccione una o más categorías
+                            </MenuItem>
                             {categories.map((category) => (
-                                <MenuItem key={category} value={category}>
-                                    <p onClick={() => dispatch(addTaskCategory(category))}>{category}</p>
+                                <MenuItem key={category} value={category} style={
+                                    { cursor: "default" }
+                                }>
+                                    <div className={styles.options_container}>
+                                        <span>{category}</span>
+                                        <button className={styles.inline_button} onClick={() => handleCategoryChange(category)}>+</button>
+                                    </div>
                                 </MenuItem>
                             ))}
                         </Select>
                         {/*Show selected categories*/}
-                        {selectedCategories.map((category, index) => (
-                            <div key={category}>
-                                <p>{category}</p>
-                                <button onClick={() => dispatch(deleteTaskCategory(index))}>Eliminar</button>
-                            </div>
-                        ))}
+                        <div className={styles.categories_container}>
+                            {selectedCategories.map((category, index) => (
+                                <div key={category} className={styles.selected_categories}>
+                                    <p>{category}</p>
+                                    <button className={styles.inline_button} onClick={() => dispatch(deleteTaskCategory(category))}>-</button>
+                                </div>
+                            ))}
+                        </div>
                     </Stack>
                 </DialogContentText>
             </DialogContent>

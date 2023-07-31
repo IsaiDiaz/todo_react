@@ -37,9 +37,9 @@ export const addTaskCategory = (category)=>({
     payload: category,
 });
 
-export const deleteTaskCategory = (index)=>({
+export const deleteTaskCategory = (category)=>({
     type: DELETE_TASK_CATEGORY,
-    payload: index,
+    payload: category,
 });
 
 export const clearSelectedCategories = ()=>({

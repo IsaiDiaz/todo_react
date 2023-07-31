@@ -18,15 +18,7 @@
     font-weight: bold;
 }
 
-.task_description{
-    font-size: 15px;
-}
-
-.task_date{
-    font-size: 15px;
-}
-
-.task_status{
+.task_content_text{
     font-size: 15px;
 }
 
